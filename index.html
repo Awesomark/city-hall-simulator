@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>City Hall Simulator</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main class="shell">
+      <section class="masthead" aria-label="City overview">
+        <div class="city-id">
+          <img src="assets/city-hall.svg" alt="" class="seal">
+          <div>
+            <p class="eyebrow">Mayor's Office</p>
+            <h1>City Hall Simulator</h1>
+          </div>
+        </div>
+        <div class="date-card">
+          <span id="termLabel">Year 1</span>
+          <strong id="monthLabel">January</strong>
+        </div>
+      </section>
+
+      <section class="scoreboard" aria-label="City metrics">
+        <article class="metric">
+          <span>City Income</span>
+          <strong id="incomeMetric">$0M</strong>
+          <small id="incomeDelta">+0M / yr</small>
+        </article>
+        <article class="metric">
+          <span>City Expenses</span>
+          <strong id="expensesMetric">$0M</strong>
+          <small id="expensesDelta">+0M / yr</small>
+        </article>
+        <article class="metric">
+          <span>Approval</span>
+          <strong id="approvalMetric">0%</strong>
+          <small id="approvalMood">Stable</small>
+        </article>
+      </section>
+
+      <section class="workbench">
+        <aside class="city-panel" aria-label="City status">
+          <img src="assets/city-map.svg" alt="" class="city-map">
+          <div class="balance">
+            <span>Annual Balance</span>
+            <strong id="balanceMetric">$0M</strong>
+          </div>
+          <div class="pressure-list" id="pressureList"></div>
+          <button class="advance" id="advanceTurn" type="button">Advance Month</button>
+        </aside>
+
+        <section class="policy-board" aria-label="Policy controls">
+          <nav class="tabs" id="tabs" aria-label="Policy categories"></nav>
+          <div id="policyList" class="policy-list"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="game.js"></script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 390" role="img" aria-label="Stylized city districts map">
+  <rect width="640" height="390" fill="#dbe7e4"/>
+  <path d="M0 288c70-29 127-31 190-11 82 26 151 16 216-18 83-43 152-42 234 2v129H0z" fill="#89b8aa"/>
+  <path d="M0 311c78-20 134-17 204 2 74 20 142 9 212-23 80-37 148-34 224 6v94H0z" fill="#6fa093"/>
+  <path d="M44 82h92v230H44z" fill="#f8faf8" stroke="#203f5f" stroke-width="5"/>
+  <path d="M167 126h74v185h-74z" fill="#eef4f2" stroke="#203f5f" stroke-width="5"/>
+  <path d="M278 62h90v249h-90z" fill="#f8faf8" stroke="#203f5f" stroke-width="5"/>
+  <path d="M404 104h76v207h-76z" fill="#eef4f2" stroke="#203f5f" stroke-width="5"/>
+  <path d="M513 152h82v160h-82z" fill="#f8faf8" stroke="#203f5f" stroke-width="5"/>
+  <path d="M71 108h38v43H71zM71 172h38v43H71zM71 236h38v43H71zM190 151h28v36h-28zM190 210h28v36h-28zM304 91h38v43h-38zM304 155h38v43h-38zM304 219h38v43h-38zM427 129h30v37h-30zM427 191h30v37h-30zM536 177h36v34h-36zM536 232h36v34h-36z" fill="#c9822d" opacity=".9"/>
+  <path d="M17 332h606" stroke="#203f5f" stroke-width="11" stroke-linecap="round"/>
+  <path d="M64 334h74M189 334h74M316 334h74M441 334h74" stroke="#f5f1e8" stroke-width="4" stroke-linecap="round"/>
+  <path d="M0 52h640" stroke="#2f6f73" stroke-width="7" stroke-dasharray="22 17" opacity=".55"/>
+</svg>
