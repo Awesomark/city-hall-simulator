@@ -297,35 +297,35 @@ function renderPolicies() {
     const row = document.createElement("article");
     row.className = "policy";
 
-    const copy = document.createElement("div");
-    copy.innerHTML = `
-      <h2>${policy.name}</h2>
-      <p>${policy.description}</p>
-      <div class="policy-meta">
-        <span>Income <strong class="${policy.income >= 0 ? "positive" : "negative"}">${signedMoney(policy.income)}</strong></span>
-        <span>Expense <strong class="${policy.expenses > 0 ? "negative" : "positive"}">${signedMoney(policy.expenses)}</strong></span>
-        <span>Approval <strong class="${policy.approval >= 0 ? "positive" : "negative"}">${signedPercent(policy.approval)}</strong></span>
-      </div>
-    `;
-
-    const label = document.createElement("label");
-    label.className = "switch";
-    label.setAttribute("aria-label", policy.name);
-    label.innerHTML = `
-      <input type="checkbox" ${state.enabled.has(policy.id) ? "checked" : ""}>
-      <span class="slider"></span>
-    `;
-
-    label.querySelector("input").addEventListener("change", (event) => {
-      if (event.target.checked) {
-        state.enabled.add(policy.id);
-      } else {
+    const toggle = document.createElement("button");
+    toggle.className = "toggle";
+    toggle.type = "button";
+    toggle.textContent = state.enabled.has(policy.id) ? "Enabled" : "Disabled";
+    toggle.setAttribute("aria-pressed", String(state.enabled.has(policy.id)));
+    toggle.addEventListener("click", () => {
+      if (state.enabled.has(policy.id)) {
         state.enabled.delete(policy.id);
+      } else {
+        state.enabled.add(policy.id);
       }
       render();
     });
 
-    row.append(copy, label);
+    const copy = document.createElement("div");
+    copy.innerHTML = `
+      <h3>${policy.name}</h3>
+      <p>${policy.description}</p>
+    `;
+
+    const meta = document.createElement("div");
+    meta.className = "policy-meta";
+    meta.innerHTML = `
+      <span>Income <strong class="${policy.income >= 0 ? "positive" : "negative"}">${signedMoney(policy.income)}</strong></span>
+      <span>Expense <strong class="${policy.expenses > 0 ? "negative" : "positive"}">${signedMoney(policy.expenses)}</strong></span>
+      <span>Approval <strong class="${policy.approval >= 0 ? "positive" : "negative"}">${signedPercent(policy.approval)}</strong></span>
+    `;
+
+    row.append(toggle, copy, meta);
     policyList.append(row);
   }
 }

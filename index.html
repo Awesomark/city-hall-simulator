@@ -8,45 +8,40 @@
   </head>
   <body>
     <main class="shell">
-      <section class="masthead" aria-label="City overview">
-        <div class="city-id">
-          <img src="assets/city-hall.svg" alt="" class="seal">
-          <div>
-            <p class="eyebrow">Mayor's Office</p>
-            <h1>City Hall Simulator</h1>
-          </div>
-        </div>
-        <div class="date-card">
+      <header class="topbar">
+        <h1>City Hall Simulator</h1>
+        <div class="date-line">
           <span id="termLabel">Year 1</span>
-          <strong id="monthLabel">January</strong>
+          <span id="monthLabel">January</span>
         </div>
-      </section>
-
-      <section class="scoreboard" aria-label="City metrics">
-        <article class="metric">
-          <span>City Income</span>
-          <strong id="incomeMetric">$0M</strong>
-          <small id="incomeDelta">+0M / yr</small>
-        </article>
-        <article class="metric">
-          <span>City Expenses</span>
-          <strong id="expensesMetric">$0M</strong>
-          <small id="expensesDelta">+0M / yr</small>
-        </article>
-        <article class="metric">
-          <span>Approval</span>
-          <strong id="approvalMetric">0%</strong>
-          <small id="approvalMood">Stable</small>
-        </article>
-      </section>
+      </header>
 
       <section class="workbench">
         <aside class="city-panel" aria-label="City status">
-          <img src="assets/city-map.svg" alt="" class="city-map">
-          <div class="balance">
-            <span>Annual Balance</span>
-            <strong id="balanceMetric">$0M</strong>
+          <h2>City</h2>
+          <div class="stat-list">
+            <div class="stat-row">
+              <span>Income</span>
+              <strong id="incomeMetric">$0M</strong>
+              <small id="incomeDelta">+0M / yr</small>
+            </div>
+            <div class="stat-row">
+              <span>Expenses</span>
+              <strong id="expensesMetric">$0M</strong>
+              <small id="expensesDelta">+0M / yr</small>
+            </div>
+            <div class="stat-row">
+              <span>Balance</span>
+              <strong id="balanceMetric">$0M</strong>
+              <small>annual</small>
+            </div>
+            <div class="stat-row">
+              <span>Approval</span>
+              <strong id="approvalMetric">0%</strong>
+              <small id="approvalMood">Stable</small>
+            </div>
           </div>
+          <h2>Groups</h2>
           <div class="pressure-list" id="pressureList"></div>
           <button class="advance" id="advanceTurn" type="button">Advance Month</button>
         </aside>
