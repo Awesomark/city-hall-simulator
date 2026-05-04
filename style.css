@@ -68,6 +68,13 @@ h1 {
   letter-spacing: 0;
 }
 
+.version {
+  margin-left: 6px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 400;
+}
+
 h2 {
   font-size: 0.95rem;
   letter-spacing: 0;
