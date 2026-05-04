@@ -4,190 +4,199 @@ const city = {
 };
 
 const groups = [
-  { id: "young", name: "Young People", share: 21, support: 54 },
-  { id: "middle", name: "Middle Class", share: 34, support: 58 },
-  { id: "working", name: "Working Class", share: 29, support: 51 },
-  { id: "democrats", name: "Democrats", share: 46, support: 62 },
-  { id: "republicans", name: "Republicans", share: 31, support: 39 },
-  { id: "renters", name: "Renters", share: 42, support: 55 },
-  { id: "homeowners", name: "Homeowners", share: 48, support: 52 },
-  { id: "business", name: "Business Owners", share: 8, support: 47 }
+  { id: "young", name: "Young People", share: 21, base: 52 },
+  { id: "middle", name: "Middle Class", share: 34, base: 56 },
+  { id: "working", name: "Working Class", share: 29, base: 51 },
+  { id: "renters", name: "Renters", share: 42, base: 55 },
+  { id: "homeowners", name: "Homeowners", share: 48, base: 53 },
+  { id: "business", name: "Business Owners", share: 8, base: 48 },
+  { id: "progressives", name: "Progressives", share: 37, base: 59 },
+  { id: "conservatives", name: "Conservatives", share: 33, base: 42 }
 ];
 
-const metrics = {
-  revenue: { label: "Revenue", value: 455, type: "money" },
-  expenses: { label: "Expenses", value: 438, type: "money" },
-  traffic: { label: "Traffic", value: 63, type: "score", invert: true },
-  safety: { label: "Safety", value: 57, type: "score" },
-  housing: { label: "Housing", value: 42, type: "score" },
-  infrastructure: { label: "Infrastructure", value: 49, type: "score" },
-  environment: { label: "Environment", value: 51, type: "score" },
-  trust: { label: "Public Trust", value: 53, type: "score" },
-  approval: { label: "Approval", value: 54, type: "score" }
+const metricDefs = {
+  revenue: { label: "Revenue", base: 455, type: "money" },
+  expenses: { label: "Expenses", base: 438, type: "money" },
+  traffic: { label: "Traffic", base: 62, type: "score", invert: true },
+  crime: { label: "Crime", base: 46, type: "score", invert: true },
+  housing: { label: "Housing Affordability", base: 43, type: "score" },
+  infrastructure: { label: "Infrastructure", base: 49, type: "score" },
+  environment: { label: "Environment", base: 51, type: "score" },
+  inequality: { label: "Inequality", base: 58, type: "score", invert: true },
+  trust: { label: "Public Trust", base: 53, type: "score" },
+  approval: { label: "Approval", base: 54, type: "score" }
 };
 
-const questions = [
+const categories = [
   {
-    dept: "Transportation",
-    title: "Downtown traffic is getting worse.",
-    text: "Commuters want faster trips, businesses want customers to reach storefronts, and neighborhood groups are angry about overflow parking.",
-    choices: [
+    id: "transportation",
+    name: "Transport",
+    policies: [
       {
-        title: "Expand bus frequency",
-        text: "Put more buses on the busiest corridors and add late service.",
-        metrics: { expenses: 15, traffic: -8, environment: 4, trust: 2 },
-        groups: { young: 8, working: 6, democrats: 5, business: 2, republicans: -3 }
+        id: "bus_service",
+        name: "Bus Service Funding",
+        description: "Frequency, route coverage, shelters, and driver staffing.",
+        level: 2,
+        metrics: { expenses: 6, traffic: -4, environment: 2, trust: 1 },
+        groups: { young: 3, working: 3, renters: 3, homeowners: -1, conservatives: -2 }
       },
       {
-        title: "Raise parking meter prices",
-        text: "Charge more for curb space downtown and use the revenue for street maintenance.",
-        metrics: { revenue: 14, traffic: -3, infrastructure: 2, trust: -3 },
-        groups: { business: -7, homeowners: -4, republicans: 3, middle: -2 }
+        id: "parking_fees",
+        name: "Parking Fees",
+        description: "Meter prices, garage rates, and permit costs.",
+        level: 1,
+        metrics: { revenue: 5, traffic: -1, trust: -1 },
+        groups: { business: -3, homeowners: -2, conservatives: 1, progressives: 1 }
       },
       {
-        title: "Delay action",
-        text: "Ask staff for another study and avoid a fight this month.",
-        metrics: { traffic: 4, trust: -4 },
-        groups: { middle: -3, business: -2, young: -2 }
+        id: "bike_lanes",
+        name: "Protected Bike Lanes",
+        description: "Dedicated lanes and traffic calming on major corridors.",
+        level: 1,
+        metrics: { expenses: 3, traffic: -2, environment: 3 },
+        groups: { young: 4, progressives: 3, homeowners: -2, business: -1, conservatives: -2 }
       }
     ]
   },
   {
-    dept: "Housing",
-    title: "Rents are rising faster than wages.",
-    text: "Tenant groups are demanding emergency action while homeowners warn that rapid construction could change neighborhood character.",
-    choices: [
+    id: "housing",
+    name: "Housing",
+    policies: [
       {
-        title: "Allow more apartments near transit",
-        text: "Legalize small apartment buildings and mixed-use lots around major stops.",
-        metrics: { revenue: 8, expenses: 3, housing: 9, traffic: -2, trust: 1 },
-        groups: { renters: 9, young: 8, democrats: 5, homeowners: -10, republicans: -4 }
+        id: "upzoning",
+        name: "Neighborhood Upzoning",
+        description: "Legalize more apartments, duplexes, and mixed-use blocks.",
+        level: 1,
+        metrics: { revenue: 4, housing: 5, traffic: 1, inequality: -2 },
+        groups: { renters: 5, young: 4, progressives: 3, homeowners: -5, conservatives: -3 }
       },
       {
-        title: "Fund rental assistance",
-        text: "Use city funds to keep vulnerable tenants housed this year.",
-        metrics: { expenses: 18, housing: 7, trust: 4 },
-        groups: { renters: 10, working: 7, democrats: 6, business: -2, republicans: -6 }
+        id: "public_housing",
+        name: "Public Housing Program",
+        description: "City-built mixed-income housing near transit and services.",
+        level: 0,
+        metrics: { expenses: 8, housing: 5, inequality: -4, trust: 1 },
+        groups: { renters: 5, working: 4, progressives: 5, homeowners: -3, conservatives: -5 }
       },
       {
-        title: "Protect single-family zoning",
-        text: "Promise no broad zoning changes and focus on preserving existing neighborhoods.",
-        metrics: { housing: -6, trust: -1 },
-        groups: { homeowners: 8, republicans: 6, renters: -8, young: -7, democrats: -4 }
+        id: "rental_inspections",
+        name: "Rental Inspections",
+        description: "Code enforcement and fines for unsafe rental properties.",
+        level: 1,
+        metrics: { revenue: 1, expenses: 2, housing: 2, trust: 1 },
+        groups: { renters: 4, working: 2, business: -1, conservatives: -1 }
       }
     ]
   },
   {
-    dept: "Community Safety",
-    title: "A late-night shooting has shaken the east side.",
-    text: "Residents want action quickly, but there is disagreement over whether the city should focus on patrols or prevention.",
-    choices: [
+    id: "safety",
+    name: "Safety",
+    policies: [
       {
-        title: "Increase patrols",
-        text: "Fund overtime and visible patrols in the affected district.",
-        metrics: { expenses: 12, safety: 7, trust: -1 },
-        groups: { homeowners: 6, middle: 4, business: 5, young: -5, democrats: -2, republicans: 7 }
+        id: "police_patrols",
+        name: "Police Patrol Budget",
+        description: "Staffing, overtime, patrol coverage, and precinct resources.",
+        level: 2,
+        metrics: { expenses: 7, crime: -4, trust: -1 },
+        groups: { homeowners: 4, middle: 3, business: 3, conservatives: 4, young: -3, progressives: -4 }
       },
       {
-        title: "Fund violence interruption",
-        text: "Back outreach workers, victim services, and conflict mediation.",
-        metrics: { expenses: 9, safety: 4, trust: 4 },
-        groups: { young: 7, working: 5, democrats: 7, homeowners: -2, republicans: -5 }
+        id: "violence_prevention",
+        name: "Violence Prevention",
+        description: "Outreach teams, youth programs, victim support, and mediation.",
+        level: 1,
+        metrics: { expenses: 4, crime: -2, inequality: -1, trust: 2 },
+        groups: { young: 4, working: 3, progressives: 4, conservatives: -3 }
       },
       {
-        title: "Hold a listening session",
-        text: "Meet with residents and promise a public safety plan next month.",
-        metrics: { safety: -2, trust: 2 },
-        groups: { democrats: 2, homeowners: -3, business: -3, republicans: -4 }
+        id: "civilian_review",
+        name: "Civilian Review Board",
+        description: "Independent police misconduct review and public reporting.",
+        level: 0,
+        metrics: { expenses: 2, trust: 3 },
+        groups: { young: 4, progressives: 5, conservatives: -4, homeowners: -1 }
       }
     ]
   },
   {
-    dept: "Budget",
-    title: "The finance director warns of a deficit.",
-    text: "The city can cover this year, but next year's budget will be painful unless revenue rises or spending slows.",
-    choices: [
+    id: "taxes",
+    name: "Taxes",
+    policies: [
       {
-        title: "Raise property taxes",
-        text: "Increase the rate and protect core services.",
-        metrics: { revenue: 28, trust: -5 },
-        groups: { homeowners: -12, middle: -7, republicans: -9, democrats: -2, working: -3 }
+        id: "property_tax",
+        name: "Property Tax Rate",
+        description: "The city's main local tax on land and buildings.",
+        level: 1,
+        metrics: { revenue: 13, trust: -2 },
+        groups: { homeowners: -6, middle: -3, conservatives: -5, progressives: -1 }
       },
       {
-        title: "Freeze hiring",
-        text: "Hold open positions vacant in most departments.",
-        metrics: { expenses: -18, safety: -2, infrastructure: -3, trust: -2 },
-        groups: { republicans: 6, business: 3, democrats: -5, working: -4 }
+        id: "business_tax",
+        name: "Business Tax",
+        description: "Local taxes and license fees on commercial activity.",
+        level: 1,
+        metrics: { revenue: 8, trust: -1 },
+        groups: { business: -7, conservatives: -3, progressives: 2, working: -1 }
       },
       {
-        title: "Use reserves",
-        text: "Avoid immediate pain and spend part of the rainy-day fund.",
-        metrics: { trust: 1, infrastructure: -1 },
-        groups: { middle: 2, homeowners: 2, republicans: -3 }
+        id: "vacancy_tax",
+        name: "Vacancy Tax",
+        description: "Penalties for empty storefronts and vacant residential units.",
+        level: 0,
+        metrics: { revenue: 4, housing: 2, trust: 1 },
+        groups: { renters: 3, young: 2, business: -3, homeowners: -2, progressives: 3 }
       }
     ]
   },
   {
-    dept: "Infrastructure",
-    title: "A water main break closes three blocks.",
-    text: "The public works department says this is part of a larger replacement backlog that cannot be ignored much longer.",
-    choices: [
+    id: "infrastructure",
+    name: "Infrastructure",
+    policies: [
       {
-        title: "Launch a replacement program",
-        text: "Borrow for a multi-year water and road repair package.",
-        metrics: { expenses: 24, infrastructure: 10, trust: 5, traffic: 2 },
-        groups: { homeowners: 6, middle: 5, business: 4, republicans: -4 }
+        id: "road_repair",
+        name: "Road Repair",
+        description: "Potholes, bridges, paving, signs, and traffic signals.",
+        level: 1,
+        metrics: { expenses: 7, traffic: -2, infrastructure: 4, trust: 1 },
+        groups: { middle: 3, homeowners: 3, business: 2, conservatives: -1 }
       },
       {
-        title: "Patch the break only",
-        text: "Repair the immediate damage and keep the capital budget unchanged.",
-        metrics: { expenses: 4, infrastructure: -3, trust: -3 },
-        groups: { republicans: 3, homeowners: -4, business: -4 }
+        id: "water_mains",
+        name: "Water Main Replacement",
+        description: "Long-term replacement of aging underground water systems.",
+        level: 1,
+        metrics: { expenses: 8, infrastructure: 5, trust: 2 },
+        groups: { homeowners: 3, middle: 2, business: 1, conservatives: -2 }
       },
       {
-        title: "Apply for state grants",
-        text: "Delay major work while seeking outside funding.",
-        metrics: { expenses: 2, infrastructure: 1, trust: -1 },
-        groups: { middle: 1, business: -2, working: -2 }
+        id: "parks",
+        name: "Parks And Recreation",
+        description: "Parks, rec centers, pools, trails, and public spaces.",
+        level: 1,
+        metrics: { expenses: 4, environment: 2, inequality: -1, trust: 2 },
+        groups: { young: 3, working: 2, progressives: 3, conservatives: -1 }
       }
     ]
   }
 ];
 
 const state = {
-  turn: 1,
-  month: 0,
+  activeCategory: categories[0].id,
   year: 1,
-  questionIndex: 0,
-  log: []
+  quarter: 1,
+  news: ["Election won. The new administration takes office."]
 };
 
-const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
+const tabs = document.querySelector("#tabs");
+const policyList = document.querySelector("#policyList");
+const advanceTurn = document.querySelector("#advanceTurn");
+
+function allPolicies() {
+  return categories.flatMap((category) => category.policies);
+}
 
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
-}
-
-function formatPopulation(value) {
-  return value.toLocaleString("en-US");
-}
-
-function formatMetric(metric) {
-  if (metric.type === "money") return `$${metric.value}M`;
-  return `${metric.value}%`;
 }
 
 function signed(value, suffix = "") {
@@ -195,157 +204,218 @@ function signed(value, suffix = "") {
   return `${value > 0 ? "+" : ""}${value}${suffix}`;
 }
 
-function metricClass(key, change) {
-  if (change === 0) return "";
-  const metric = metrics[key];
-  const good = metric.invert ? change < 0 : change > 0;
-  return good ? "positive" : "negative";
+function money(value) {
+  const prefix = value < 0 ? "-$" : "$";
+  return `${prefix}${Math.abs(value)}M`;
 }
 
-function applyChoice(choice) {
-  for (const [key, change] of Object.entries(choice.metrics || {})) {
-    const metric = metrics[key];
-    metric.value += change;
-    if (metric.type === "score") {
-      metric.value = clamp(metric.value, 0, 100);
-    } else {
-      metric.value = Math.max(0, metric.value);
+function calculate() {
+  const metrics = {};
+  for (const [key, def] of Object.entries(metricDefs)) {
+    metrics[key] = def.base;
+  }
+
+  const groupSupport = {};
+  for (const group of groups) {
+    groupSupport[group.id] = group.base;
+  }
+
+  for (const policy of allPolicies()) {
+    for (const [key, effect] of Object.entries(policy.metrics)) {
+      metrics[key] += effect * policy.level;
+    }
+    for (const [key, effect] of Object.entries(policy.groups)) {
+      groupSupport[key] += effect * policy.level;
     }
   }
 
-  for (const [groupId, change] of Object.entries(choice.groups || {})) {
-    const group = groups.find((item) => item.id === groupId);
-    group.support = clamp(group.support + change, 0, 100);
+  const balance = metrics.revenue - metrics.expenses;
+  const serviceMood = Math.round((metrics.housing + metrics.infrastructure + metrics.trust - metrics.traffic - metrics.crime - metrics.inequality) / 36);
+  const fiscalMood = Math.round(balance / 30);
+
+  for (const group of groups) {
+    groupSupport[group.id] = clamp(groupSupport[group.id] + serviceMood + fiscalMood, 0, 100);
   }
 
-  recalculateApproval();
-  state.log.unshift(`${monthNames[state.month]} Y${state.year}: ${choice.title}`);
-  state.log = state.log.slice(0, 5);
-  advanceTurn();
-  render();
-}
+  const weighted = groups.reduce((sum, group) => sum + groupSupport[group.id] * group.share, 0);
+  const shares = groups.reduce((sum, group) => sum + group.share, 0);
+  metrics.approval = clamp(Math.round(weighted / shares), 0, 100);
 
-function recalculateApproval() {
-  const weightedSupport = groups.reduce((sum, group) => {
-    return sum + group.support * group.share;
-  }, 0);
-  const totalShare = groups.reduce((sum, group) => sum + group.share, 0);
-  const budgetPressure = metrics.revenue.value - metrics.expenses.value;
-  const fiscalMood = Math.round(budgetPressure / 25);
-  metrics.approval.value = clamp(Math.round(weightedSupport / totalShare) + fiscalMood, 0, 100);
-}
-
-function advanceTurn() {
-  state.turn += 1;
-  state.month += 1;
-  if (state.month > 11) {
-    state.month = 0;
-    state.year += 1;
+  for (const [key, def] of Object.entries(metricDefs)) {
+    if (def.type === "score") metrics[key] = clamp(metrics[key], 0, 100);
+    if (def.type === "money") metrics[key] = Math.max(0, metrics[key]);
   }
-  state.questionIndex = (state.questionIndex + 1) % questions.length;
+
+  return { metrics, groupSupport, balance };
 }
 
-function renderGroups() {
+function formatMetric(key, value) {
+  const def = metricDefs[key];
+  if (def.type === "money") return money(value);
+  return `${value}%`;
+}
+
+function valueClass(key, value) {
+  const def = metricDefs[key];
+  if (def.type === "money") return "";
+  if (value >= 65) return def.invert ? "negative" : "positive";
+  if (value <= 40) return def.invert ? "positive" : "negative";
+  return "";
+}
+
+function effectClass(key, change) {
+  if (change === 0) return "";
+  const def = metricDefs[key];
+  const good = def.invert ? change < 0 : change > 0;
+  return good ? "positive" : "negative";
+}
+
+function renderGroups(groupSupport) {
   const groupList = document.querySelector("#groupList");
   groupList.innerHTML = "";
 
   for (const group of groups) {
+    const support = groupSupport[group.id];
     const row = document.createElement("div");
-    row.className = "group-row";
+    row.className = "group";
     row.innerHTML = `
       <strong>${group.name}</strong>
-      <span class="group-meta">${group.support}% / ${group.share}%</span>
-      <div class="bar"><span style="--value: ${group.support}%"></span></div>
+      <span class="group-meta">${support}% / ${group.share}%</span>
+      <div class="bar"><span style="--value: ${support}%"></span></div>
     `;
     groupList.append(row);
   }
 }
 
-function renderMetrics() {
+function renderMetrics(metrics, balance) {
   const metricsGrid = document.querySelector("#metricsGrid");
   metricsGrid.innerHTML = "";
 
-  for (const [key, metric] of Object.entries(metrics)) {
+  for (const [key, def] of Object.entries(metricDefs)) {
     const row = document.createElement("div");
-    row.className = "metric-row";
+    row.className = "metric";
     row.innerHTML = `
-      <span>${metric.label}</span>
-      <strong class="${key === "approval" && metric.value < 45 ? "negative" : ""}">${formatMetric(metric)}</strong>
+      <span>${def.label}</span>
+      <strong class="${valueClass(key, metrics[key])}">${formatMetric(key, metrics[key])}</strong>
     `;
     metricsGrid.append(row);
   }
+
+  document.querySelector("#balanceMetric").textContent = money(balance);
+  document.querySelector("#balanceMetric").className = balance >= 0 ? "positive" : "negative";
+  document.querySelector("#approvalSummary").textContent = `Approval ${metrics.approval}%`;
 }
 
-function renderQuestion() {
-  const question = questions[state.questionIndex];
-  document.querySelector("#questionDept").textContent = question.dept;
-  document.querySelector("#questionTitle").textContent = question.title;
-  document.querySelector("#questionText").textContent = question.text;
-  document.querySelector("#questionImpact").textContent = "Decision Required";
-
-  const choiceList = document.querySelector("#choiceList");
-  choiceList.innerHTML = "";
-
-  for (const choice of question.choices) {
+function renderTabs() {
+  tabs.innerHTML = "";
+  for (const category of categories) {
     const button = document.createElement("button");
-    button.className = "choice";
+    button.className = "tab";
     button.type = "button";
-    button.addEventListener("click", () => applyChoice(choice));
+    button.textContent = category.name;
+    button.setAttribute("aria-selected", String(category.id === state.activeCategory));
+    button.addEventListener("click", () => {
+      state.activeCategory = category.id;
+      render();
+    });
+    tabs.append(button);
+  }
+}
 
-    const copy = document.createElement("div");
-    copy.innerHTML = `
-      <strong>${choice.title}</strong>
-      <span>${choice.text}</span>
+function renderPolicies() {
+  const category = categories.find((item) => item.id === state.activeCategory);
+  policyList.innerHTML = "";
+
+  for (const policy of category.policies) {
+    const row = document.createElement("article");
+    row.className = "policy";
+    row.innerHTML = `
+      <div class="policy-head">
+        <h3>${policy.name}</h3>
+        <span class="policy-level">Level ${policy.level}</span>
+      </div>
+      <p>${policy.description}</p>
+      <div class="policy-scale">
+        <span>Low</span>
+        <input type="range" min="0" max="4" step="1" value="${policy.level}" aria-label="${policy.name}">
+        <span>High</span>
+      </div>
+      <div class="policy-effects">${renderPolicyEffects(policy)}</div>
     `;
 
-    const effects = document.createElement("div");
-    effects.className = "effect-list";
-    effects.innerHTML = renderEffects(choice);
-    button.append(copy, effects);
-    choiceList.append(button);
+    row.querySelector("input").addEventListener("input", (event) => {
+      policy.level = Number(event.target.value);
+      render();
+    });
+
+    policyList.append(row);
   }
 }
 
-function renderEffects(choice) {
-  const metricEffects = Object.entries(choice.metrics || {}).map(([key, change]) => {
-    const metric = metrics[key];
-    const suffix = metric.type === "money" ? "M" : "%";
-    const value = metric.type === "money" ? signed(change, suffix) : signed(change, suffix);
-    return `<span class="effect-line"><span>${metric.label}</span><strong class="${metricClass(key, change)}">${value}</strong></span>`;
+function renderPolicyEffects(policy) {
+  const metricBits = Object.entries(policy.metrics).slice(0, 4).map(([key, effect]) => {
+    const suffix = metricDefs[key].type === "money" ? "M" : "%";
+    return `<span>${metricDefs[key].label}: <strong class="${effectClass(key, effect)}">${signed(effect, suffix)}/lvl</strong></span>`;
   });
-
-  const groupEffects = Object.entries(choice.groups || {}).slice(0, 3).map(([groupId, change]) => {
-    const group = groups.find((item) => item.id === groupId);
-    return `<span class="effect-line"><span>${group.name}</span><strong class="${change > 0 ? "positive" : "negative"}">${signed(change, "%")}</strong></span>`;
-  });
-
-  return [...metricEffects, ...groupEffects].join("");
+  return metricBits.join("");
 }
 
-function renderLog() {
-  const eventLog = document.querySelector("#eventLog");
-  if (state.log.length === 0) {
-    eventLog.innerHTML = "<p>No decisions yet.</p>";
+function renderEffects() {
+  const effectsList = document.querySelector("#effectsList");
+  const active = allPolicies().filter((policy) => policy.level > 0);
+  document.querySelector("#policyCount").textContent = `${active.length} active`;
+
+  if (active.length === 0) {
+    effectsList.innerHTML = `<div class="effect-row"><span>No active policies</span><strong>0</strong></div>`;
     return;
   }
-  eventLog.innerHTML = state.log.map((item) => `<p>${item}</p>`).join("");
+
+  effectsList.innerHTML = active.slice(0, 8).map((policy) => {
+    const budget = ((policy.metrics.revenue || 0) - (policy.metrics.expenses || 0)) * policy.level;
+    return `
+      <div class="effect-row">
+        <span>${policy.name}</span>
+        <strong class="${budget >= 0 ? "positive" : "negative"}">${signed(budget, "M")}</strong>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderNews() {
+  document.querySelector("#newsLog").innerHTML = state.news.map((item) => `<p><span>${item}</span></p>`).join("");
+}
+
+function advance() {
+  const { metrics, balance } = calculate();
+  const tone = metrics.approval >= 60 ? "popular" : metrics.approval < 45 ? "under pressure" : "contested";
+  state.news.unshift(`Y${state.year} Q${state.quarter}: Administration ${tone}; balance ${money(balance)}.`);
+  state.news = state.news.slice(0, 5);
+
+  state.quarter += 1;
+  if (state.quarter > 4) {
+    state.quarter = 1;
+    state.year += 1;
+  }
+  render();
 }
 
 function renderDate() {
-  document.querySelector("#turnLabel").textContent = `Turn ${state.turn}`;
   document.querySelector("#termLabel").textContent = `Year ${state.year}`;
-  document.querySelector("#monthLabel").textContent = monthNames[state.month];
+  document.querySelector("#quarterLabel").textContent = `Q${state.quarter}`;
 }
 
 function render() {
+  const result = calculate();
   document.querySelector("#cityName").textContent = city.name;
-  document.querySelector("#populationMetric").textContent = formatPopulation(city.population);
+  document.querySelector("#populationMetric").textContent = city.population.toLocaleString("en-US");
   renderDate();
-  renderGroups();
-  renderMetrics();
-  renderQuestion();
-  renderLog();
+  renderGroups(result.groupSupport);
+  renderMetrics(result.metrics, result.balance);
+  renderTabs();
+  renderPolicies();
+  renderEffects();
+  renderNews();
 }
 
-recalculateApproval();
+advanceTurn.addEventListener("click", advance);
 render();

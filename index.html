@@ -11,43 +11,57 @@
       <header class="topbar">
         <h1>City Hall Simulator</h1>
         <div class="date-line">
-          <span id="turnLabel">Turn 1</span>
           <span id="termLabel">Year 1</span>
-          <span id="monthLabel">January</span>
+          <span id="quarterLabel">Q1</span>
+          <span id="approvalSummary">Approval 0%</span>
         </div>
       </header>
 
-      <section class="workbench">
-        <aside class="city-panel" aria-label="City status">
+      <section class="layout">
+        <aside class="sidebar" aria-label="City electorate">
           <h2 id="cityName">Fairview</h2>
-          <div class="city-fact">
+          <div class="city-row">
             <span>Population</span>
             <strong id="populationMetric">0</strong>
           </div>
-          <h3>Groups</h3>
-          <div class="group-list" id="groupList"></div>
+          <div class="city-row">
+            <span>Annual Balance</span>
+            <strong id="balanceMetric">$0M</strong>
+          </div>
+
+          <h3>Voter Groups</h3>
+          <div id="groupList" class="group-list"></div>
         </aside>
 
-        <section class="main-panel" aria-label="City agenda">
-          <section class="metrics-panel" aria-label="City metrics">
-            <h2>City Metrics</h2>
-            <div class="metrics-grid" id="metricsGrid"></div>
-          </section>
-
-          <section class="question-panel" aria-label="Current question">
-            <div class="question-head">
-              <span id="questionDept">Agenda</span>
-              <strong id="questionImpact">Decision Required</strong>
+        <section class="simulation" aria-label="City simulation">
+          <section class="panel">
+            <div class="panel-title">
+              <h2>City Conditions</h2>
+              <button id="advanceTurn" type="button">Advance Quarter</button>
             </div>
-            <h2 id="questionTitle">Question title</h2>
-            <p id="questionText">Question text</p>
-            <div class="choice-list" id="choiceList"></div>
+            <div id="metricsGrid" class="metrics-grid"></div>
           </section>
 
-          <section class="log-panel" aria-label="Recent decisions">
-            <h2>Recent Decisions</h2>
-            <div id="eventLog" class="event-log"></div>
+          <section class="panel">
+            <div class="panel-title">
+              <h2>Policy Effects</h2>
+              <span id="policyCount">0 active</span>
+            </div>
+            <div id="effectsList" class="effects-list"></div>
           </section>
+
+          <section class="panel">
+            <div class="panel-title">
+              <h2>News</h2>
+              <span>local media</span>
+            </div>
+            <div id="newsLog" class="news-log"></div>
+          </section>
+        </section>
+
+        <section class="policy-panel" aria-label="Policies">
+          <nav id="tabs" class="tabs" aria-label="Policy departments"></nav>
+          <div id="policyList" class="policy-list"></div>
         </section>
       </section>
     </main>

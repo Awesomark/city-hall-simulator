@@ -8,6 +8,7 @@ Current prototype:
 
 - City name and population panel
 - Group support bars with each group's population share
-- City metrics for revenue, expenses, traffic, safety, housing, infrastructure, environment, trust, and approval
-- Turn-based city questions with multiple answers
-- Recent decision log
+- Department policy tabs with 0-4 intensity levels
+- City metrics for revenue, expenses, traffic, crime, housing, infrastructure, environment, inequality, trust, and approval
+- Quarterly simulation turns
+- Policy effect and local news panels
