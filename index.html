@@ -11,6 +11,7 @@
       <header class="topbar">
         <h1>City Hall Simulator</h1>
         <div class="date-line">
+          <span id="turnLabel">Turn 1</span>
           <span id="termLabel">Year 1</span>
           <span id="monthLabel">January</span>
         </div>
@@ -18,37 +19,35 @@
 
       <section class="workbench">
         <aside class="city-panel" aria-label="City status">
-          <h2>City</h2>
-          <div class="stat-list">
-            <div class="stat-row">
-              <span>Income</span>
-              <strong id="incomeMetric">$0M</strong>
-              <small id="incomeDelta">+0M / yr</small>
-            </div>
-            <div class="stat-row">
-              <span>Expenses</span>
-              <strong id="expensesMetric">$0M</strong>
-              <small id="expensesDelta">+0M / yr</small>
-            </div>
-            <div class="stat-row">
-              <span>Balance</span>
-              <strong id="balanceMetric">$0M</strong>
-              <small>annual</small>
-            </div>
-            <div class="stat-row">
-              <span>Approval</span>
-              <strong id="approvalMetric">0%</strong>
-              <small id="approvalMood">Stable</small>
-            </div>
+          <h2 id="cityName">Fairview</h2>
+          <div class="city-fact">
+            <span>Population</span>
+            <strong id="populationMetric">0</strong>
           </div>
-          <h2>Groups</h2>
-          <div class="pressure-list" id="pressureList"></div>
-          <button class="advance" id="advanceTurn" type="button">Advance Month</button>
+          <h3>Groups</h3>
+          <div class="group-list" id="groupList"></div>
         </aside>
 
-        <section class="policy-board" aria-label="Policy controls">
-          <nav class="tabs" id="tabs" aria-label="Policy categories"></nav>
-          <div id="policyList" class="policy-list"></div>
+        <section class="main-panel" aria-label="City agenda">
+          <section class="metrics-panel" aria-label="City metrics">
+            <h2>City Metrics</h2>
+            <div class="metrics-grid" id="metricsGrid"></div>
+          </section>
+
+          <section class="question-panel" aria-label="Current question">
+            <div class="question-head">
+              <span id="questionDept">Agenda</span>
+              <strong id="questionImpact">Decision Required</strong>
+            </div>
+            <h2 id="questionTitle">Question title</h2>
+            <p id="questionText">Question text</p>
+            <div class="choice-list" id="choiceList"></div>
+          </section>
+
+          <section class="log-panel" aria-label="Recent decisions">
+            <h2>Recent Decisions</h2>
+            <div id="eventLog" class="event-log"></div>
+          </section>
         </section>
       </section>
     </main>

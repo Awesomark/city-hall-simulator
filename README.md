@@ -6,8 +6,8 @@ Open `index.html` in a browser to play locally. The same files can be published 
 
 Current prototype:
 
-- Policy tabs for transportation, community safety, taxes, infrastructure, and housing
-- Toggleable policies with income, expense, and approval effects
-- City income, city expenses, approval, and annual balance
-- Interest group pressure bars
-- Monthly advancement
+- City name and population panel
+- Group support bars with each group's population share
+- City metrics for revenue, expenses, traffic, safety, housing, infrastructure, environment, trust, and approval
+- Turn-based city questions with multiple answers
+- Recent decision log
